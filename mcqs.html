@@ -328,7 +328,7 @@
             const targetY = element.getBoundingClientRect().top + window.pageYOffset;
             const startY = window.pageYOffset;
             const distance = targetY - startY;
-            const duration = 2300; // Slow scroll duration in milliseconds
+            const duration = 1000; // Slow scroll duration in milliseconds
             const startTime = performance.now();
 
             function step(timestamp) {
