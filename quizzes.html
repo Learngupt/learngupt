@@ -27,6 +27,7 @@
             align-items: center;
             justify-content: space-between;
         }
+
         .content {
             padding-top: 10px !important;
         }
@@ -35,6 +36,7 @@
             position: relative !important;
             width: 47px;
         }
+
         .title h2 {
             font-size: 1.8rem;
             color: #fff;
@@ -166,18 +168,23 @@
             }
         }
 
-        .quiz-co{
-        margin-top: 30%;
+        .quiz-co {
+            margin-top: 30%;
         }
+
         @media (max-width:1200px) {
-            .quiz-co{
+            .quiz-co {
                 margin-top: 0px;
             }
         }
+
         @media (max-width:480px) {
-            .quiz-co{
+            .quiz-co {
                 margin-top: 30%;
             }
+        }
+        #bottom-navbar {
+            visibility: hidden;
         }
     </style>
 </head>
@@ -203,11 +210,11 @@
     </div>
 
     <div class="quiz-co">
-    <!-- Main Content: Quiz Display -->
-    <section class="quiz-container" id="quizContainer">
-        <!-- Quiz content will be dynamically populated here -->
-    </section>
-</div>
+        <!-- Main Content: Quiz Display -->
+        <section class="quiz-container" id="quizContainer">
+            <!-- Quiz content will be dynamically populated here -->
+        </section>
+    </div>
     <!-- Navigation Buttons -->
     <div class="quiz-container">
         <div class="navigation-buttons">
@@ -216,13 +223,14 @@
         </div>
     </div>
     <!-- Custom Warning Popup -->
-<div id="warningPopup" class="warning-popup">
-    <div class="popup-content">
-        <p>Please answer this question first.</p>
-        <button onclick="closeWarning()">OK</button>
+    <div id="warningPopup" class="warning-popup">
+        <div class="popup-content">
+            <p>Please answer this question first.</p>
+            <button onclick="closeWarning()">OK</button>
+        </div>
     </div>
-</div>
-
+<!-- Bottom Navbar -->
+<div id="bottom-navbar"></div> <!-- Placeholder for the navbar -->
 
     <script>
         // Function to get URL parameters
@@ -239,7 +247,7 @@
         const type = getUrlParam('type'); // Retrieve the 'type' parameter
         const test = getUrlParam('test');
         const page = getUrlParam('page'); // For back navigation
-        
+
 
         // Function to handle back button
         function goBack() {
@@ -380,36 +388,36 @@
 
         // Navigate to the next question or finish the quiz
         function nextQuestion() {
-    // Check if the current question is answered
-    if (!userResponses[currentQuestionIndex]) {
-        showWarning(); // Show custom warning popup
-        return; // Prevent moving to the next question
-    }
+            // Check if the current question is answered
+            if (!userResponses[currentQuestionIndex]) {
+                showWarning(); // Show custom warning popup
+                return; // Prevent moving to the next question
+            }
 
-    if (currentQuestionIndex < quizData.length - 1) {
-        currentQuestionIndex++;
-        displayQuestion();
-        updateNavigationButtons();
-    } else {
-        // Only allow finishing if all questions are answered
-        if (Object.keys(userResponses).length === quizData.length) {
-            finishQuiz();
-        } else {
-            showWarning("Please answer all the questions before finishing the quiz.");
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+                updateNavigationButtons();
+            } else {
+                // Only allow finishing if all questions are answered
+                if (Object.keys(userResponses).length === quizData.length) {
+                    finishQuiz();
+                } else {
+                    showWarning("Please answer all the questions before finishing the quiz.");
+                }
+            }
         }
-    }
-}
 
 
 
 
         // Finish the quiz and navigate to results page
         function finishQuiz() {
-    saveUserResponses();
-    const key = `quiz_completed_${board}_${userClass}_${subject}_${chapter}_${test}`;
-    localStorage.setItem(key, 'true'); // Mark the quiz as completed
-    window.location.href = `results.html?board=${board}&class=${userClass}&subject=${subject}&chapter=${chapter}&test=${test}&type=${type}`;
-}
+            saveUserResponses();
+            const key = `quiz_completed_${board}_${userClass}_${subject}_${chapter}_${test}`;
+            localStorage.setItem(key, 'true'); // Mark the quiz as completed
+            window.location.href = `results.html?board=${board}&class=${userClass}&subject=${subject}&chapter=${chapter}&test=${test}&type=${type}`;
+        }
 
 
         // Function to show confirmation popup for resetting quiz
@@ -496,16 +504,18 @@
     <!-- select the current option for next -->
     <script>
         function showWarning(message = "Please answer this question first.") {
-    const popup = document.getElementById('warningPopup');
-    popup.querySelector('p').textContent = message;
-    popup.style.display = 'block';
-}
+            const popup = document.getElementById('warningPopup');
+            popup.querySelector('p').textContent = message;
+            popup.style.display = 'block';
+        }
 
-function closeWarning() {
-    const popup = document.getElementById('warningPopup');
-    popup.style.display = 'none';
-}
+        function closeWarning() {
+            const popup = document.getElementById('warningPopup');
+            popup.style.display = 'none';
+        }
 
+        localStorage.setItem('lastPage', window.location.href);
+        localStorage.setItem('selectedTest', test);
     </script>
     <script src="script.js"></script>
 </body>

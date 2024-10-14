@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const userClass = localStorage.getItem('selectedClass');
             const type = localStorage.getItem('selectedType');
             const subject = localStorage.getItem('selectedSubject');
+            const chapter = localStorage.getItem('selectedChapter');
+            const test = localStorage.getItem('selectedTest');
 
             // Add event listeners to handle navigation clicks
             document.getElementById('home').addEventListener('click', function () {
@@ -26,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('continue').addEventListener('click', function () {
                 const lastLessonPage = localStorage.getItem('lastLessonPage');
                 if (lastLessonPage && lastLessonPage !== 'home.html') {
-                    window.location.href = `${lastLessonPage}?board=${board}&class=${userClass}&subject=${subject}&type=${type}`;
+                    window.location.href = `${lastLessonPage}?board=${board}&class=${userClass}&subject=${subject}&chapter=${chapter}&test=${test}&type=${type}`;
                 } else {
                     window.location.href = 'nothinghere.html';
                 }

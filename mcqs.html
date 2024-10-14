@@ -20,8 +20,8 @@
         .navbar {
             padding-left: 10px !important;
             padding-block: 22px !important;
-            position:absolute;
-            
+            position: absolute;
+
         }
 
         .content {
@@ -224,6 +224,10 @@
             transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
             /* Ensures smooth transition */
         }
+
+        #bottom-navbar {
+            visibility: hidden;
+        }
     </style>
 </head>
 
@@ -255,7 +259,7 @@
     <section class="mcq-container" id="mcqContainer">
         <!-- MCQs will be populated dynamically here -->
     </section>
-
+    <div id="bottom-navbar"></div>
     <script>
         // Function to get URL parameters
         function getUrlParam(name) {
@@ -485,6 +489,9 @@
                 ripple.style.animation = 'ripple-animation 600ms linear';
             });
         });
+
+        localStorage.setItem('lastPage', window.location.href);
+        localStorage.setItem('selectedChapter', chapter);
     </script>
     <script src="script.js"></script>
 </body>
