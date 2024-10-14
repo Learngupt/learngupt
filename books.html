@@ -87,10 +87,6 @@
                 opacity: 0;
             }
         }
-
-        #bottom-navbar {
-            visibility: hidden;
-        }
     </style>
 </head>
 
@@ -110,9 +106,7 @@
         <!-- Books will be populated dynamically here -->
     </section>
     <div class="download-folder-message" style="text-align: center; margin: 12px;">
-    <h3>The book pdf will be saved in "LearnGupt Books" folder in downloads of your device.</h3>
-    <!-- Bottom Navbar -->
-<div id="bottom-navbar"></div> <!-- Placeholder for the navbar -->
+    <h3>The book pdf will download in learngupt folder in downloads of your device</h3>
 </div>
     <script>
         // Function to get URL parameters
@@ -193,9 +187,6 @@
 
             target.appendChild(ripple);
         });
-        
-        localStorage.setItem('lastPage', window.location.href);
-        localStorage.setItem('selectedChapter', chapter);
     </script>
 
     <script src="script.js"></script>

@@ -47,9 +47,6 @@
         body.light-mode #content {
             color: rgb(49, 49, 49); /* Content text color in light mode */
         }
-        #bottom-navbar {
-            visibility: hidden;
-        }
     </style>
 </head>
 <body>
@@ -66,8 +63,6 @@
     </nav>
 
     <div id="content"></div>
-    <!-- Bottom Navbar -->
-<div id="bottom-navbar"></div> <!-- Placeholder for the navbar -->
 
     <script>
         function getUrlParam(name) {
@@ -120,9 +115,6 @@
         }
 
         loadContent();
-
-        localStorage.setItem('lastPage', window.location.href);
-        localStorage.setItem('selectedChapter', chapter);
     </script>
     <script src="script.js"></script>
 </body>

@@ -80,10 +80,6 @@
             /* Gold color for completed status */
             font-weight: bold;
         }
-
-        #bottom-navbar {
-            visibility: hidden;
-        }
     </style>
 </head>
 
@@ -102,8 +98,6 @@
     <section class="quiz-container" id="quizContainer">
         <!-- Quiz sections will be dynamically populated here -->
     </section>
-    <!-- Bottom Navbar -->
-<div id="bottom-navbar"></div> <!-- Placeholder for the navbar -->
 
     <!-- quiz.html -->
     <script>
@@ -140,37 +134,34 @@
 
         // Function to load quiz sections
         function loadQuizzes() {
-            const quizContainer = document.getElementById('quizContainer');
-            const tests = ['test1', 'test2', 'test3']; // Array of tests
+    const quizContainer = document.getElementById('quizContainer');
+    const tests = ['test1', 'test2', 'test3']; // Array of tests
 
-            tests.forEach(test => {
-                const key = `quiz_completed_${board}_${userClass}_${subject}_${chapter}_${test}`;
-                const completed = localStorage.getItem(key) === 'true'; // Now check the 'completed' status from results.html
+    tests.forEach(test => {
+        const key = `quiz_completed_${board}_${userClass}_${subject}_${chapter}_${test}`;
+        const completed = localStorage.getItem(key) === 'true'; // Now check the 'completed' status from results.html
 
-                const quizSection = document.createElement('div');
-                quizSection.classList.add('quiz-section');
+        const quizSection = document.createElement('div');
+        quizSection.classList.add('quiz-section');
 
-                const quizButton = document.createElement('button');
-                quizButton.classList.add('quiz-button');
-                quizButton.textContent = `Quiz ${test.charAt(4).toUpperCase() + test.slice(5)}`; // Capitalize Test 1, Test 2, etc.
-                quizButton.onclick = () => navigateToQuiz(test);
+        const quizButton = document.createElement('button');
+        quizButton.classList.add('quiz-button');
+        quizButton.textContent = `Quiz ${test.charAt(4).toUpperCase() + test.slice(5)}`; // Capitalize Test 1, Test 2, etc.
+        quizButton.onclick = () => navigateToQuiz(test);
 
-                if (completed) {
-                    quizButton.classList.add('completed');
-                    quizButton.innerHTML += ' <span class="status">(Completed)</span>'; // Add completed status
-                }
-
-                quizSection.appendChild(quizButton);
-                quizContainer.appendChild(quizSection);
-            });
+        if (completed) {
+            quizButton.classList.add('completed');
+            quizButton.innerHTML += ' <span class="status">(Completed)</span>'; // Add completed status
         }
+
+        quizSection.appendChild(quizButton);
+        quizContainer.appendChild(quizSection);
+    });
+}
 
 
         // Load quizzes when the page loads
         window.onload = loadQuizzes;
-
-        localStorage.setItem('lastPage', window.location.href);
-        localStorage.setItem('selectedChapter', chapter);
     </script>
 
 
