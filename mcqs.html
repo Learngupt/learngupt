@@ -20,8 +20,8 @@
         .navbar {
             padding-left: 10px !important;
             padding-block: 22px !important;
-            position:absolute;
-            
+            position: absolute;
+
         }
 
         .content {
@@ -375,31 +375,40 @@
                     const solvedQuestions = getSolvedQuestions();
 
                     rows.forEach((row, index) => {
-                        const [question, optionA, optionB, optionC, optionD, correctOption] = row.split(',');
+                        // Use a regex to split on commas not inside quotes
+                        const values = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 
-                        if (question && optionA && optionB && optionC && optionD) {
+                        if (values) {
+                            const question = values[0].trim().replace(/(^"|"$)/g, ''); // First value is the question, removing quotes
+                            const optionA = values[1] ? values[1].trim().replace(/(^"|"$)/g, '') : ''; // Second value is option A
+                            const optionB = values[2] ? values[2].trim().replace(/(^"|"$)/g, '') : ''; // Third value is option B
+                            const optionC = values[3] ? values[3].trim().replace(/(^"|"$)/g, '') : ''; // Fourth value is option C
+                            const optionD = values[4] ? values[4].trim().replace(/(^"|"$)/g, '') : ''; // Fifth value is option D
+                            const correctOption = values[5] ? values[5].trim().replace(/(^"|"$)/g, '') : ''; // Sixth value is correct option
+
+                            // Create the MCQ section
                             const mcqSection = document.createElement('div');
                             mcqSection.className = 'mcq-section';
                             mcqSection.innerHTML = `
-                                <div class="question">Q${index + 1}. ${question.trim()}</div>
-                                <div class="options">
-                                    <div class="option" data-correct="${correctOption.trim()}" data-option="a">${optionA.trim()}</div>
-                                    <div class="option" data-correct="${correctOption.trim()}" data-option="b">${optionB.trim()}</div>
-                                    <div class="option" data-correct="${correctOption.trim()}" data-option="c">${optionC.trim()}</div>
-                                    <div class="option" data-correct="${correctOption.trim()}" data-option="d">${optionD.trim()}</div>
-                                </div>
-                            `;
+                        <div class="question">Q${index + 1}. ${question}</div>
+                        <div class="options">
+                            <div class="option" data-correct="${correctOption}" data-option="a">${optionA}</div>
+                            <div class="option" data-correct="${correctOption}" data-option="b">${optionB}</div>
+                            <div class="option" data-correct="${correctOption}" data-option="c">${optionC}</div>
+                            <div class="option" data-correct="${correctOption}" data-option="d">${optionD}</div>
+                        </div>
+                    `;
                             mcqContainer.appendChild(mcqSection);
 
                             // Check if this question was already solved
                             if (solvedQuestions.hasOwnProperty(index)) {
                                 const selectedOption = solvedQuestions[index];
                                 const selectedOptionElement = mcqSection.querySelector(`.option[data-option="${selectedOption}"]`);
-                                const correctOptionElement = mcqSection.querySelector(`.option[data-option="${correctOption.trim()}"]`);
+                                const correctOptionElement = mcqSection.querySelector(`.option[data-option="${correctOption}"]`);
 
                                 if (selectedOptionElement) {
                                     selectedOptionElement.classList.add('selected');
-                                    if (selectedOption === correctOption.trim()) {
+                                    if (selectedOption === correctOption) {
                                         selectedOptionElement.classList.add('correct');
                                     } else {
                                         selectedOptionElement.classList.add('incorrect');
@@ -440,6 +449,10 @@
                 })
                 .catch(error => console.error('Error loading MCQs:', error));
         }
+
+        // Load MCQs when the page loads
+        loadMCQs();
+
 
         // Load MCQs when the page loads
         loadMCQs();
