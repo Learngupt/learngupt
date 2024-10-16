@@ -269,32 +269,72 @@
                 .catch(error => console.error('Error loading quiz:', error));
         }
 
-        // Parse CSV data into quizData array
-        function parseCSV(csvData) {
-            const rows = csvData.trim().split('\n');
-            rows.forEach((row, index) => {
-                const [question, optionA, optionB, optionC, optionD, correctOption] = row.split(',');
+       // Parse CSV data into quizData array
+function parseCSV(csvData) {
+    const rows = csvData.trim().split('\n');
+    rows.forEach((row, index) => {
+        const values = parseCSVLine(row);
 
-                if (question && optionA && optionB && optionC && optionD && correctOption) {
-                    quizData.push({
-                        question: question.trim(),
-                        options: {
-                            a: optionA.trim(),
-                            b: optionB.trim(),
-                            c: optionC.trim(),
-                            d: optionD.trim()
-                        },
-                        correctOption: correctOption.trim().toLowerCase()
-                    });
-                }
+        if (values.length === 6) { // Ensure there are exactly 6 fields
+            const [question, optionA, optionB, optionC, optionD, correctOption] = values;
+
+            quizData.push({
+                question: question, // Already cleaned in parseCSVLine
+                options: {
+                    a: optionA,
+                    b: optionB,
+                    c: optionC,
+                    d: optionD
+                },
+                correctOption: correctOption.toLowerCase()
             });
-
-            // Load user responses from localStorage if available
-            const savedResponses = getUserResponses();
-            if (savedResponses) {
-                userResponses = savedResponses;
-            }
         }
+    });
+
+    // Load user responses from localStorage if available
+    const savedResponses = getUserResponses();
+    if (savedResponses) {
+        userResponses = savedResponses;
+    }
+}
+
+// Helper function to parse a single CSV line
+function parseCSVLine(line) {
+    const result = [];
+    let current = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+
+        if (char === '"' && (i === 0 || line[i - 1] !== '\\')) {
+            inQuotes = !inQuotes;
+            continue; // Skip the quote character
+        }
+
+        if (char === ',' && !inQuotes) {
+            result.push(current.trim());
+            current = '';
+        } else {
+            current += char;
+        }
+    }
+
+    // Push the last field
+    result.push(current.trim());
+
+    // Remove surrounding quotes and replace double quotes with single quotes
+    return result.map(field => {
+        if (field.startsWith('"') && field.endsWith('"')) {
+            // Remove the surrounding quotes
+            field = field.slice(1, -1);
+            // Replace double quotes with single quotes
+            field = field.replace(/""/g, '"');
+        }
+        return field;
+    });
+}
+
 
         // Function to get user responses from localStorage
         function getUserResponses() {

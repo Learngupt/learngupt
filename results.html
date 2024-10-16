@@ -234,30 +234,85 @@
             localStorage.setItem(key, 'true');
         }
 
-        // Parse CSV data into quizData array
-        function parseCSV(csvData) {
-            const rows = csvData.trim().split('\n');
-            rows.forEach((row, index) => {
-                const [question, optionA, optionB, optionC, optionD, correctOption] = row.split(',');
+        // Parse CSV data into quizData array (Updated)
+function parseCSV(csvData) {
+    const rows = csvData.trim().split('\n');
+    rows.forEach((row, index) => {
+        const values = parseCSVLine(row);
 
-                if (question && optionA && optionB && optionC && optionD && correctOption) {
-                    quizData.push({
-                        question: question.trim(),
-                        options: {
-                            a: optionA.trim(),
-                            b: optionB.trim(),
-                            c: optionC.trim(),
-                            d: optionD.trim()
-                        },
-                        correctOption: correctOption.trim().toLowerCase()
-                    });
-                }
+        if (values.length === 6) { // Ensure there are exactly 6 fields
+            const [question, optionA, optionB, optionC, optionD, correctOption] = values;
+
+            quizData.push({
+                question: question, // Already cleaned in parseCSVLine
+                options: {
+                    a: optionA,
+                    b: optionB,
+                    c: optionC,
+                    d: optionD
+                },
+                correctOption: correctOption.toLowerCase()
             });
-
-            const key = `quiz_responses_${board}_${userClass}_${subject}_${chapter}_${test}`;
-            const responses = localStorage.getItem(key);
-            userResponses = responses ? JSON.parse(responses) : {};
         }
+    });
+
+    const key = `quiz_responses_${board}_${userClass}_${subject}_${chapter}_${test}`;
+    const responses = localStorage.getItem(key);
+    userResponses = responses ? JSON.parse(responses) : {};
+}
+
+// Helper function to parse a single CSV line (Advanced parsing logic)
+function parseCSVLine(line) {
+    const result = [];
+    let current = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+
+        if (char === '"' && (i === 0 || line[i - 1] !== '\\')) {
+            inQuotes = !inQuotes;
+            continue; // Skip the quote character
+        }
+
+        if (char === ',' && !inQuotes) {
+            result.push(current.trim());
+            current = '';
+        } else {
+            current += char;
+        }
+    }
+
+    // Push the last field
+    result.push(current.trim());
+
+    // Remove surrounding quotes and replace double quotes with single quotes
+    return result.map(field => {
+        if (field.startsWith('"') && field.endsWith('"')) {
+            // Remove the surrounding quotes
+            field = field.slice(1, -1);
+            // Replace double quotes with single quotes
+            field = field.replace(/""/g, '"');
+        }
+        return field;
+    });
+}
+
+// Load quiz data and results
+function loadResults() {
+    const csvUrl = formatCsvUrl('quiz', board, userClass, subject, chapter, test);
+    fetch(csvUrl)
+        .then(response => response.text())
+        .then(csvData => {
+            parseCSV(csvData); // Updated function
+            displayResults();
+        })
+        .catch(error => console.error('Error loading quiz:', error));
+
+    const key = `quiz_completed_${board}_${userClass}_${subject}_${chapter}_${test}`;
+    localStorage.setItem(key, 'true');
+}
+
 
         // Format URL for CSV
         function formatCsvUrl(type, board, userClass, subject, chapter, test) {
