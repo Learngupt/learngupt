@@ -154,7 +154,8 @@ body.fade-out {
 
 .settings {
     position: absolute;
-    right: 30px;
+    /* right: 30px; */
+    margin-inline: 60px;
     /* Adjusted for increased padding */
 }
 
@@ -166,7 +167,15 @@ body.fade-out {
 }
 
 /* upper navbar stylish ends here */
-
+.homeicon{
+    padding-bottom: 30px;
+    padding-left: 20px;
+    padding-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    text-align: center;
+}
 /* main starts here */
 
 .content {
@@ -364,7 +373,7 @@ h4 {
 
 .scores{
     margin-right: 60px;
-    right: 30px;
+    /* right: 30px; */
 }
 .scores i {
     font-size: 1.6rem;
