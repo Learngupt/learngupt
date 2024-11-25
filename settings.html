@@ -97,6 +97,49 @@
             position: relative;
             width: 47px;
         }
+
+        /* modal style */
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #353535;
+            margin: 5% auto;
+            padding: 20px;
+            margin-top: 10vh;
+            border: 1px solid #353535;
+            width: 80%;
+            max-width: 900px;
+            border-radius: 10px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -120,8 +163,70 @@
         <hr style="width: 90%; max-width: 260px; background-color: #ffffff; opacity: 0.7;">
         <div class="settings-options">
             <button id="changeBoardClassBtn" class="settings-option ripple-target">Change Board & Class</button>
+            <button id="privacyPolicyBtn" class="settings-option ripple-target">Privacy Policy</button>
+            <button id="termsConditionsBtn" class="settings-option ripple-target">Terms and Conditions</button>
+
         </div>
     </section>
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeBtn">&times;</span>
+            <h1>Privacy Policy</h1><br>
+            <h2>Effective Date: November 25, 2024</h2>
+            <p>At LearnGupt, we respect your privacy and are committed to protecting your data. This Privacy Policy
+                explains how we handle and safeguard your data when you use our app or website.</p>
+            <br>
+            <h2>Scope of the Privacy Policy</h2>
+            <p>This Privacy Policy applies to both the LearnGupt website and the LearnGupt app, which provides a web
+                view of the website. By using our services, you agree to the terms outlined in this Privacy Policy.</p>
+            <br>
+            <h2>No Personal Data Collection</h2>
+            <p>We do not collect, process, or store any personal information such as names, email addresses, or any
+                other identifiable data. Both the app and website use local storage on your device to save non-sensitive
+                data, such as user preferences and progress. This data remains on your device and is never sent to our
+                servers or shared with third parties.</p><br>
+            <p>You have full control over this data. For the app, you can delete it by clearing the app cache or
+                uninstalling the app. For the website, you can clear your browser's local storage settings.</p>
+            <br>
+            <h2>Third-Party Services</h2>
+            <p>LearnGupt does not use third-party tracking or analytics tools. In the future, we may integrate
+                advertisements through Google AdMob. These advertisements will follow industry privacy standards and may
+                use anonymized data for relevance. Additionally, since the app is distributed through the Google Play
+                Store, any data collected during installation or updates is subject to Google's privacy policies.</p>
+            <br>
+            <h2>Online Security</h2>
+            <p>All communications between your device and the LearnGupt website are encrypted using SSL to ensure
+                security. Data stored in local storage is secure and accessible only to your device, remaining out of
+                reach from us or any other party.</p>
+            <br>
+            <h2>Advertisements (Future Scope)</h2>
+            <p>Future updates to our app or website may include advertisements. Any ads displayed will comply with
+                privacy regulations and may use anonymized data to improve relevance.</p>
+            <br>
+            <h2>Your Rights</h2>
+            <p>You have complete control over the local data stored on your device. App data can be deleted by clearing
+                the cache or uninstalling the app, while website data can be cleared through your browser settings.</p>
+            <br>
+            <h2>Updates to the Privacy Policy</h2>
+            <p>Any changes to this Privacy Policy will be communicated through a pop-up notification in the app and a
+                banner on the website.</p>
+            <br>
+            <h2>Contact Us</h2>
+            <p>If you have any questions or concerns about this Privacy Policy, please feel free to contact us via email
+                at <strong>learngupt@gmail.com</strong>.</p>
+        </div>
+    </div>
+    <!-- Terms and Conditions Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeTermsBtn">&times;</span>
+            <!-- Insert your Terms and Conditions content here -->
+            <h1>Terms and Conditions</h1>
+            <p>Welcome to LearnGupt! By using our app, you agree to the following terms and conditions...</p>
+            <!-- Add the full Terms and Conditions here -->
+        </div>
+    </div>
 
     <!-- Script for handling settings -->
     <script>
@@ -182,6 +287,58 @@
         });
     </script>
     <script src="script.js"></script>
+    <!-- modal privacy -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const privacyPolicyBtn = document.getElementById('privacyPolicyBtn');
+            const modal = document.getElementById("privacyModal");
+            const closeBtn = document.getElementById("closeBtn");
+
+            // Open Privacy Policy Modal
+            privacyPolicyBtn.addEventListener('click', function () {
+                modal.style.display = "block";
+            });
+
+            // Close Privacy Policy Modal
+            closeBtn.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // Close modal when clicking outside
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        });
+
+    </script>
+    <!-- terms and conditions modal -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const termsConditionsBtn = document.getElementById('termsConditionsBtn');
+            const termsModal = document.getElementById("termsModal");
+            const closeTermsBtn = document.getElementById("closeTermsBtn");
+
+            // Open Terms and Conditions Modal
+            termsConditionsBtn.addEventListener('click', function () {
+                termsModal.style.display = "block";
+            });
+
+            // Close Terms and Conditions Modal
+            closeTermsBtn.onclick = function () {
+                termsModal.style.display = "none";
+            }
+
+            // Close modal when clicking outside
+            window.onclick = function (event) {
+                if (event.target == termsModal) {
+                    termsModal.style.display = "none";
+                }
+            }
+        });
+
+    </script>
 </body>
 
 </html>
