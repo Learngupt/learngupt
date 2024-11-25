@@ -165,7 +165,7 @@
             <button id="changeBoardClassBtn" class="settings-option ripple-target">Change Board & Class</button>
             <button id="privacyPolicyBtn" class="settings-option ripple-target">Privacy Policy</button>
             <button id="termsConditionsBtn" class="settings-option ripple-target">Terms and Conditions</button>
-
+            <button id="creditsBtn" class="settings-option ripple-target">Credits</button>
         </div>
     </section>
     <!-- Privacy Policy Modal -->
@@ -225,6 +225,22 @@
             <h1>Terms and Conditions</h1>
             <p>Welcome to LearnGupt! By using our app, you agree to the following terms and conditions...</p>
             <!-- Add the full Terms and Conditions here -->
+        </div>
+    </div>
+    <!-- Credits Modal -->
+    <div id="creditsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeCreditsBtn">&times;</span>
+            <!-- Insert your Credits content here -->
+            <h1>Credits</h1>
+            <p>We would like to acknowledge the following individuals, organizations, and resources that contributed to
+                the development of LearnGupt:</p>
+            <ul>
+                <li><strong>Developer:</strong> Your Name</li>
+                <li><strong>Icons:</strong> Font Awesome</li>
+                <li><strong>Frameworks:</strong> HTML, CSS, JavaScript</li>
+                <li><strong>Special Thanks:</strong> To all beta testers and supporters!</li>
+            </ul>
         </div>
     </div>
 
@@ -334,6 +350,32 @@
             window.onclick = function (event) {
                 if (event.target == termsModal) {
                     termsModal.style.display = "none";
+                }
+            }
+        });
+
+    </script>
+    <!-- credits modal -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const creditsBtn = document.getElementById('creditsBtn');
+            const creditsModal = document.getElementById("creditsModal");
+            const closeCreditsBtn = document.getElementById("closeCreditsBtn");
+
+            // Open Credits Modal
+            creditsBtn.addEventListener('click', function () {
+                creditsModal.style.display = "block";
+            });
+
+            // Close Credits Modal
+            closeCreditsBtn.onclick = function () {
+                creditsModal.style.display = "none";
+            }
+
+            // Close modal when clicking outside
+            window.onclick = function (event) {
+                if (event.target == creditsModal) {
+                    creditsModal.style.display = "none";
                 }
             }
         });
