@@ -43,7 +43,7 @@
 <h3>राहत कार्य के उपकरण (Essential Tools for Relief Work)</h3>
 <b>बचाव कर्मियों के लिए निजी उपकरण (Personal Equipment for Rescuers):</b>
 
-- साबुन, हेलमेट, लाइफ जैकेट, टॉर्च, गम-बूट, सीटी।  
+- हेलमेट, लाइफ जैकेट, टॉर्च, गम-बूट, सीटी।  
 
 <b>बचाव दल के लिए उपकरण (Tools for Rescue Teams):</b>
 
